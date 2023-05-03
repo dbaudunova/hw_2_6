@@ -7,7 +7,8 @@ import com.geektech.hw_2_6.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var list: ArrayList<Photo>
+    private var list: ArrayList<Photo> = ArrayList()
+    private var selectedList: ArrayList<Photo> = ArrayList()
     private lateinit var adapter: PhotoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +20,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = PhotoAdapter(list)
+        adapter = PhotoAdapter(list, this::clickListener, this::deleteItem)
         binding.recyclerView.adapter = adapter
     }
 
+    private fun clickListener(item: Photo) {
+        //intent.putExtra(MA_SA, selectedList)
+        selectedList.add(item)
+    }
+
+    private fun deleteItem(item: Photo) {
+        selectedList.remove(item)
+    }
+
     private fun loadData() {
-        list = ArrayList()
         list.add(Photo("https://images.pexels.com/photos/1187079/pexels-photo-1187079.jpeg?cs=srgb&dl=pexels-artem-saranin-1187079.jpg&fm=jpg"))
         list.add(Photo("https://e0.pxfuel.com/wallpapers/116/2/desktop-wallpaper-love-birds-beautiful-nature-background.jpg"))
         list.add(Photo("https://www.travelandleisure.com/thmb/rbPz5_6COrWFh94qFRHYLJrRM-g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/iguazu-falls-argentina-brazil-MOSTBEAUTIFUL0921-e967cc4764ca4eb2b9941bd1b48d64b5.jpg"))
@@ -40,5 +49,9 @@ class MainActivity : AppCompatActivity() {
         list.add(Photo("https://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_images_166175.jpg"))
         list.add(Photo("https://i.pinimg.com/originals/e6/87/24/e68724db306f08ee2ab2d3ed9f6ea8bb.jpg"))
         list.add(Photo("https://st.depositphotos.com/1903767/3375/i/600/depositphotos_33751169-stock-photo-provence-france-lavender-in-a.jpg"))
+    }
+
+    companion object {
+        const val MA_SA = "MA_SA"
     }
 }
