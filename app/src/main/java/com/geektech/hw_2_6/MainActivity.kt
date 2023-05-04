@@ -1,5 +1,6 @@
 package com.geektech.hw_2_6
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.geektech.hw_2_6.databinding.ActivityMainBinding
@@ -17,6 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         loadData()
         initAdapter()
+        initListener()
+    }
+
+    private fun initListener() {
+        binding.btnSend.setOnClickListener {
+            val intent = Intent(this, SelectedActivity::class.java)
+            intent.putExtra(MA_SA, selectedList)
+            startActivity(intent)
+        }
     }
 
     private fun initAdapter() {
@@ -25,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickListener(item: Photo) {
-        //intent.putExtra(MA_SA, selectedList)
         selectedList.add(item)
     }
 
